@@ -1,0 +1,203 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #0f050b;
+  --foreground: #e0e0e0;
+
+  --primary-red: #e63946;
+  --primary-red-glow: rgba(230, 57, 70, 0.4);
+  --accent-cyan: #00b4d8;
+  --accent-cyan-glow: rgba(0, 180, 216, 0.6);
+  --success-green: #2a9d8f;
+
+  --hud-bg: rgba(26, 11, 22, 0.85);
+  --hud-border: #4a1525;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: inherit;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+@layer utilities {
+  .hud-container {
+    background: var(--hud-bg);
+    border: 1px solid var(--hud-border);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7), inset 0 0 15px rgba(230, 57, 70, 0.1);
+    backdrop-filter: blur(8px);
+    border-radius: 12px;
+  }
+
+  .glow-red {
+    text-shadow: 0 0 8px var(--primary-red-glow);
+  }
+
+  .glow-cyan {
+    text-shadow: 0 0 10px var(--accent-cyan-glow);
+  }
+
+  .btn-primary {
+    @apply relative overflow-hidden bg-transparent border-2 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 ease-out;
+    border-color: var(--primary-red);
+    box-shadow: 0 0 10px var(--primary-red-glow);
+  }
+
+  .btn-primary:hover {
+    background-color: rgba(230, 57, 70, 0.15);
+    box-shadow: 0 0 20px var(--primary-red-glow), inset 0 0 10px var(--primary-red-glow);
+    transform: translateY(-2px);
+  }
+
+  .scanline {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(to bottom,
+        rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 0) 50%,
+        rgba(0, 0, 0, 0.1) 50%,
+        rgba(0, 0, 0, 0.1));
+    background-size: 100% 4px;
+    z-index: 50;
+    pointer-events: none;
+    opacity: 0.3;
+  }
+}
+
+/* Custom heartbeat animation curve */
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+
+  14% {
+    transform: scale(1.1);
+  }
+
+  28% {
+    transform: scale(1);
+  }
+
+  42% {
+    transform: scale(1.1);
+  }
+
+  70% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-heartbeat {
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.8);
+    box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.7);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 20px rgba(230, 57, 70, 0);
+  }
+
+  100% {
+    transform: scale(0.8);
+    box-shadow: 0 0 0 0 rgba(230, 57, 70, 0);
+  }
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 2s infinite;
+}
+
+@keyframes glitch-anim {
+  0% {
+    clip-path: inset(80% 0 0 0);
+    transform: translate(-2px, 2px);
+  }
+
+  20% {
+    clip-path: inset(20% 0 80% 0);
+    transform: translate(2px, -2px);
+  }
+
+  40% {
+    clip-path: inset(60% 0 10% 0);
+    transform: translate(-2px, 0);
+  }
+
+  60% {
+    clip-path: inset(10% 0 50% 0);
+    transform: translate(2px, 2px);
+  }
+
+  80% {
+    clip-path: inset(40% 0 30% 0);
+    transform: translate(-2px, -2px);
+  }
+
+  100% {
+    clip-path: inset(90% 0 0 0);
+    transform: translate(2px, 0);
+  }
+}
+
+.glitch-text {
+  position: relative;
+  color: white;
+  display: inline-block;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+  /* Render slices on top of the white text */
+}
+
+.glitch-text::before {
+  color: var(--accent-cyan);
+  text-shadow: -2px 0 var(--accent-cyan-glow);
+  left: -3px;
+  animation: glitch-anim 2.5s infinite linear alternate-reverse;
+}
+
+.glitch-text::after {
+  color: var(--primary-red);
+  text-shadow: 2px 0 var(--primary-red-glow);
+  left: 3px;
+  animation: glitch-anim 3s infinite linear alternate-reverse;
+}
+
+@keyframes scan-beam {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.animate-scan-beam {
+  animation: scan-beam 2s ease-in-out infinite;
+}
