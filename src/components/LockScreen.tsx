@@ -72,6 +72,7 @@ export default function LockScreen({ question, questionNumber, totalQuestions, l
             >
                 <motion.div className="flex flex-col items-center mb-8" variants={itemVariants}>
                     <div className="relative w-full h-48 md:h-64 mb-6 rounded-lg overflow-hidden border-2 border-[#4a1525] shadow-[0_0_15px_rgba(230,57,70,0.2)]">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                             src={question.image}
                             alt="Scan"

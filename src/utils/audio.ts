@@ -10,6 +10,7 @@ class AudioController {
     private initContext() {
         if (typeof window === 'undefined') return;
         if (!this.ctx) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
             if (AudioContextClass) {
                 this.ctx = new AudioContextClass();
